@@ -1,0 +1,14 @@
+ 
+1. Original timezone: The timezone of the original data is naive, 
+    as it was not indicated anywhere in the dataset. Thus, we do not know what the original timezone was.
+2. Localization method: To localize the data, I used tz_localize("UTC") 
+    to make the base timezone the UTC (Coordinated Universal Time) timezone.
+3. Conversion: I converted the timezone from UTC to Eastern time (EST) using tz_convert("US/Eastern").
+4. DST handling: Daylight Saving Time (DST) can cause ambiguity when converting between timezones, 
+    which is why we want to use UTC since it avoids DST issues. Storing the data in UTC ensures that there is no
+    ambiguity when converting to local timezones. WE will only convert to local timezones for display or analysis purposes.
+    By making sure the data is in UTC timezone, we can make the data even more reliable and consistent.
+5. Example: For example, a datetime of 11am on March 12, 2023 in UTC time would be '2023-03-12 11:00:00' in UTC. 
+    In eastern time, this would be 5 am EST on March 12, 2023, which is 5 hours behind the coordinated universal time.
+    In datetime format, this converts to '2023-03-12 06:00:00' in Eastern time (EST) before the DST transition.
+
