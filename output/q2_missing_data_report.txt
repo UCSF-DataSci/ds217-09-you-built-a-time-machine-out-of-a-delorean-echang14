@@ -1,0 +1,84 @@
+
+Missing Value Summary:
+- Total missing values: 323
+- Percentage of missing data: 96.42%
+In total, there were 323 missing values in the data, 
+which is approximately 96.42% of the entire dataset. 
+Since the data is taken monthly, there are missing values in all of the data except once a month,
+on the last day of each month. This is a lot of missing data. In order to fill the missing values,
+I used several imputation methods including forward fill, backward fill, interpolation, and rolling mean.
+The forward fill method uses the last filled value to fill the missing value that comes after it,
+or it propagates the last valid observation forward. This is useful when we assume
+that the last known value is a reasonable estimate for the missing data.
+Backward fill works very similarly to forward fill but in the opposite direction, 
+filling missing values with the next valid observation.
+Interpolation estimates missing values based on surrounding data points, 
+which can capture trends in the data pretty effectively.
+The rolling mean method smooths the data by averaging over a specified window,
+which can help reduce noise and provide a more stable estimate for missing values.
+Rationale:
+I chose these methods because they are commonly used for analysis and can effectively handle different patterns of missing data.
+Pros and Cons:
+- Forward and backward fill are very simple and fast but these methods may not capture the trends in the data.
+- Interpolation is better at reflecting trends in the data, but it may introduce bias if the data is not linear.
+- Rolling mean smooths the data but may lag behind actual values and can obscure short-term fluctuations.
+For example this is the data with many missing values: 
+date
+2023-01-31    98.777000
+2023-02-01          NaN
+2023-02-02          NaN
+2023-02-03          NaN
+2023-02-04          NaN
+                ...    
+2023-12-27          NaN
+2023-12-28          NaN
+2023-12-29          NaN
+2023-12-30          NaN
+2023-12-31    98.538865
+Freq: D, Name: temperature, Length: 335, dtype: float64. 
+
+In the data, only the last days of the month
+have values for the temperature. If we use time based interpolation, we will fill the missing values in.
+This table will all be filled in: 
+date
+2023-01-31    98.777000
+2023-02-01    98.785011
+2023-02-02    98.793021
+2023-02-03    98.801031
+2023-02-04    98.809041
+                ...    
+2023-12-27    98.508585
+2023-12-28    98.516155
+2023-12-29    98.523725
+2023-12-30    98.531295
+2023-12-31    98.538865
+Freq: D, Name: temperature, Length: 335, dtype: float64
+
+
+Missing patterns:
+Missing by month:
+date
+1      0
+2     27
+3     30
+4     29
+5     30
+6     29
+7     30
+8     30
+9     29
+10    30
+11    29
+12    30
+Name: temperature, dtype: int64
+
+Missing by day of week:
+date
+0    46
+1    45
+2    47
+3    46
+4    46
+5    47
+6    46
+Name: temperature, dtype: int64
